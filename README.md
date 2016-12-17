@@ -29,6 +29,8 @@ import someEmitter from '../someModule';
 
 class MyCleanComponent extends React.Component {
     state = {
+        listening = true,
+        
         target = someEmitter,
         eventName = 'eventName',
     }
@@ -43,8 +45,12 @@ class MyCleanComponent extends React.Component {
                 {/* You can subscribe many event here. */}
                 <Subscribe target={someEmitter} eventName="otherEvent" listener={this.onEvent} />
                 
+                {/* You can subscribe with a condition. */}
+                {/* It will subscribe/unsubscribe when condition changes and this component re-renders. */}
+                {this.state.listening && <Subscribe target={someEmitter} eventName="eventName" listener={this.onEvent} />}
+                
                 {/* You can use expression for target & eventName and change it after re-render.*/}
-                {/* This will safely unsubscribe old target and resubscribe the new one.*/}
+                {/* This will safely unsubscribe old target/eventName and resubscribe the new one(s).*/}
                 <Subscribe target={this.state.target} eventName={this.state.eventName} listener={this.onEvent} />
             </div>
         );
@@ -128,6 +134,7 @@ class CooldownButton extends React.Component {
 ```
 
 > Note: If you change interval value, the timer will be reset. 
+
 > eg: You have a timer which interval is 60 seconds, and you click a button after 30 second which changes interval into 40 seconds,
 > The next event will be fired 40 seconds later (totally 70 seconds after your component mounted) which may let user feel weired.
 
@@ -143,4 +150,4 @@ You can use [babel-plugin-import](https://npmjs.com/package/babel-plugin-import)
 }
 ```
 
-This will reduce components that you didn't use.
+This will remove components that you didn't use.
