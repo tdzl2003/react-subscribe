@@ -2,9 +2,15 @@
  * Created by tdzl2003 on 12/17/16.
  */
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Timer extends Component {
+  static propTypes = {
+    interval: PropTypes.number,
+    onTimer: PropTypes.func,
+    children: PropTypes.element,
+  };
   componentWillMount() {
     const {interval} = this.props;
     this.timer = setInterval(this.onEvent, interval);
@@ -20,7 +26,7 @@ export default class Timer extends Component {
   }
   onEvent = ev => {
     const { onTimer } = this.props;
-    onTimer(ev);
+    onTimer && onTimer(ev);
   };
   render(){
     return this.props.children || null;

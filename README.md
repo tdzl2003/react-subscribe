@@ -138,6 +138,72 @@ class CooldownButton extends React.Component {
 > eg: You have a timer which interval is 60 seconds, and you click a button after 30 second which changes interval into 40 seconds,
 > The next event will be fired 40 seconds later (totally 70 seconds after your component mounted) which may let user feel weired.
 
+### Fetch
+
+Use `Fetch` instead of `fetch` or promise.
+
+```js
+function SomeComponent({ data, loading, error, reload }) {
+  if (loading){
+    return <div>loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error.message} <a href='#' onClick={reload}>Reload</a></div>;
+  }
+  return (
+    <div>
+      {JSON.stringify(data)}
+    </div>
+  )
+}
+
+const FETCH_OPTION = {
+    method: 'POST',
+    headers: {
+        'X-AccessToken': 'some_token',
+    },
+    credentials: 'include',     // Default credentials is 'same-origin' in `Fetch`
+}
+
+export default function SomePage(props){
+  const { id } = props;
+  return (
+    <div>
+      <Fetch url={`/some/api/${id}`} type="json" option={FETCH_OPTION}>
+        <SomeComponent />
+      </Fetch>
+    </div>
+  );
+}
+```
+
+Use 'doFetch' props to provide a custom async function.
+
+```js
+
+async function customRequest(setStatus) {
+    // Set final statusCode. Optional. Use return & exception will be more graceful.
+    setStatus(200);
+    return "Hello, world!";
+}
+
+export default function SomePage(props){
+  const { id } = props;
+  return (
+    <div>
+      <Fetch doFetch={customRequest}>
+        <SomeComponent />
+      </Fetch>
+    </div>
+  );
+}
+```
+
+> Note: be careful about inline `options` or `doFetch` property. They will be a new instance after each render.
+> Each time url/options/doFetch/type changes, request will be sent again.
+> Use a constant option if option will not change.
+> Use a immutable option in state if you need to change option between renders.
+
 ## module-loader
 
 You can use [babel-plugin-import](https://npmjs.com/package/babel-plugin-import) to reduce code size.

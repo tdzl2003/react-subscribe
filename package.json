@@ -1,6 +1,6 @@
 {
   "name": "react-subscribe",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Use react component style to subscribe event or use time interval.",
   "main": "lib/index.js",
   "scripts": {
@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/tdzl2003/react-subscribe#readme",
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0"
+    "react": "^15.0.0 || ^16.0.0",
+    "prop-types": "^15.0.0 || ^16.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

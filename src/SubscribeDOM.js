@@ -2,7 +2,8 @@
  * Created by tdzl2003 on 12/17/16.
  */
 
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class SubscribeDOM extends React.Component {
   static propTypes = {

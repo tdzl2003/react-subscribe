@@ -2,9 +2,10 @@
  * Created by tdzl2003 on 12/17/16.
  */
 
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-export default class Subscribe extends React.Component {
+export default class Subscribe extends Component {
   static propTypes = {
     children: PropTypes.element,
     target: PropTypes.object,
