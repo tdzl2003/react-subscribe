@@ -40,7 +40,7 @@ export default class Fetch extends PureComponent {
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.doFetch !== this.props.doFetch || newProps.url !== this.props.url || newProps.options !== this.props.options || newProps.type !== this.props.type) {
+    if (newProps.url !== this.props.url || newProps.type !== this.props.type) {
       this.doFetch(newProps);
     }
   }
@@ -58,11 +58,11 @@ export default class Fetch extends PureComponent {
     this.setState({
       loading: true,
     });
-    promise = doFetch ? doFetch(status => {
+    promise = (doFetch ? doFetch(url, status => {
       this.setState({
         statusCode: resp.status,
       });
-    }) : (fetch(url, options).then(resp => {
+    }) : fetch(url, options).then(resp => {
       this.setState({
         statusCode: resp.status,
       });
