@@ -55,6 +55,9 @@ export default class Fetch extends PureComponent {
 
   doFetch({url, options, type, doFetch}) {
     let promise;
+    this.setState({
+      loading: true,
+    });
     promise = doFetch ? doFetch(status => {
       this.setState({
         statusCode: resp.status,
