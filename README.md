@@ -181,28 +181,22 @@ Use 'doFetch' props to provide a custom async function.
 
 ```js
 
-async function customRequest(setStatus) {
+async function customRequest(url, setStatus) {
     // Set final statusCode. Optional. Use return & exception will be more graceful.
     setStatus(200);
     return "Hello, world!";
 }
 
 export default function SomePage(props){
-  const { id } = props;
   return (
     <div>
-      <Fetch doFetch={customRequest}>
+      <Fetch doFetch={customRequest} url="foo">
         <SomeComponent />
       </Fetch>
     </div>
   );
 }
 ```
-
-> Note: be careful about inline `options` or `doFetch` property. They will be a new instance after each render.
-> Each time url/options/doFetch/type changes, request will be sent again.
-> Use a constant option if option will not change.
-> Use a immutable option in state if you need to change option between renders.
 
 ## module-loader
 
