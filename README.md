@@ -1,9 +1,12 @@
 # Subscribe event in react style
 
-Feel tired about `componentWillMount` and `componentWillUnmount` pair to subscribe and unsubscribe events?
+Feel tired about `componentDidMount` and `componentWillUnmount` pair to subscribe and unsubscribe events?
 This module will help.
 
-Both helpful for react and react-native.
+Feel tired about `componentDidMount` and `componentWillReceiveProps` and write a `fetchData` method and deal with reentry issue and 'warning: setState after componentDidUnmount''?
+This module will help.
+
+Helpful for both react and react-native.
 
 ## Installation
 
