@@ -140,7 +140,7 @@ class CooldownButton extends React.Component {
 
 ### Fetch
 
-Use `Fetch` instead of `fetch` or promise.
+Use `Fetch` instead of `fetch` or promise. Fetch will auto reload when `url` or `type` changes.
 
 ```js
 function SomeComponent({ data, loading, error, reload }) {
