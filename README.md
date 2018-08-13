@@ -31,33 +31,33 @@ import {Subscribe} from 'react-subscribe';
 import someEmitter from '../someModule';
 
 class MyCleanComponent extends React.Component {
-    state = {
-        listening = true,
+  state = {
+    listening = true,
 
-        target = someEmitter,
-        eventName = 'eventName',
-    }
-    onEvent = ev => {
-    };
-    render() {
-        return (
-            <div>
-                {/* This will render nothing: */}
-                <Subscribe target={someEmitter} eventName="eventName" listener={this.onEvent} />
+    target = someEmitter,
+    eventName = 'eventName',
+  }
+  onEvent = ev => {
+  };
+  render() {
+    return (
+      <div>
+        {/* This will render nothing: */}
+        <Subscribe target={someEmitter} eventName="eventName" listener={this.onEvent} />
 
-                {/* You can subscribe many event here. */}
-                <Subscribe target={someEmitter} eventName="otherEvent" listener={this.onEvent} />
+        {/* You can subscribe many event here. */}
+        <Subscribe target={someEmitter} eventName="otherEvent" listener={this.onEvent} />
 
-                {/* You can subscribe with a condition. */}
-                {/* It will subscribe/unsubscribe when condition changes and this component re-renders. */}
-                {this.state.listening && <Subscribe target={someEmitter} eventName="eventName" listener={this.onEvent} />}
+        {/* You can subscribe with a condition. */}
+        {/* It will subscribe/unsubscribe when condition changes and this component re-renders. */}
+        {this.state.listening && <Subscribe target={someEmitter} eventName="eventName" listener={this.onEvent} />}
 
-                {/* You can use expression for target & eventName and change it after re-render.*/}
-                {/* This will safely unsubscribe old target/eventName and resubscribe the new one(s).*/}
-                <Subscribe target={this.state.target} eventName={this.state.eventName} listener={this.onEvent} />
-            </div>
-        );
-    }
+        {/* You can use expression for target & eventName and change it after re-render.*/}
+        {/* This will safely unsubscribe old target/eventName and resubscribe the new one(s).*/}
+        <Subscribe target={this.state.target} eventName={this.state.eventName} listener={this.onEvent} />
+      </div>
+    );
+  }
 }
 ```
 
@@ -68,16 +68,34 @@ you should use Subscribe in this form:
 
 ```js
 class MyCleanComponent extends React.Component {
-    onEvent = ev => {
-    };
-    render() {
-        // This component will render only a <input />
-        return (
-            <Subscribe target={someEmitter}, eventName="eventName" listener={this.onEvent}>
-                <input />
-            </Subscribe>
-        );
-    }
+  onEvent = ev => {
+  };
+  render() {
+    // This component will render only a <input />
+    return (
+      <Subscribe target={someEmitter}, eventName="eventName" listener={this.onEvent}>
+          <input />
+      </Subscribe>
+    );
+  }
+}
+```
+
+If you use react 16+, you also can use React.Fragment instead:
+
+```js
+class MyCleanComponent extends React.Component {
+  onEvent = ev => {
+  };
+  render() {
+    // This component will render only a <input />
+    return (
+      <React.Fragment>
+        <input />
+        <Subscribe target={someEmitter}, eventName="eventName" listener={this.onEvent} />
+      </React.Fragment>
+    );
+  }
 }
 ```
 
