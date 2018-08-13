@@ -191,9 +191,7 @@ export default function SomePage(props) {
 Use 'doFetch' props to provide a custom async function.
 
 ```js
-async function customRequest(url, setStatus) {
-  // Set final statusCode. Optional. Use return & exception will be more graceful.
-  setStatus(200);
+async function customRequest(url) {
   return 'Hello, world!';
 }
 
