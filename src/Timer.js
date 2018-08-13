@@ -11,14 +11,14 @@ export default class Timer extends Component {
     onTimer: PropTypes.func,
     children: PropTypes.element,
   };
-  componentWillMount() {
-    const {interval} = this.props;
+  componentDidMount() {
+    const { interval } = this.props;
     this.timer = setInterval(this.onEvent, interval);
   }
-  componentWillReceiveProps(newProps) {
-    if (newProps.interval !== this.props.interval) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.interval !== this.props.interval) {
       clearInterval(this.timer);
-      this.timer = setInterval(this.onEvent, newProps.interval);
+      this.timer = setInterval(this.onEvent, this.props.interval);
     }
   }
   componentWillUnmount() {
@@ -28,7 +28,7 @@ export default class Timer extends Component {
     const { onTimer } = this.props;
     onTimer && onTimer(ev);
   };
-  render(){
+  render() {
     return this.props.children || null;
   }
 }

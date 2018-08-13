@@ -12,17 +12,19 @@ export default class Subscribe extends Component {
     eventName: PropTypes.string,
     listener: PropTypes.func,
   };
-  componentWillMount() {
-    this.subscribe(this.props);
+  subscription = null;
+
+  componentDidMount() {
+    this.subscribe();
   }
-  componentWillReceiveProps(newProps) {
-    if (newProps.target !== this.props.target || newProps.eventName !== this.props.eventName) {
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.target !== this.props.target ||
+      prevProps.eventName !== this.props.eventName
+    ) {
       this.unsubscribe();
-      this.subscribe(newProps);
+      this.subscribe();
     }
-  }
-  shouldComponentUpdate(newProps) {
-    return newProps.children !== this.props.children;
   }
   componentWillUnmount() {
     this.unsubscribe();
@@ -31,8 +33,9 @@ export default class Subscribe extends Component {
     const { listener } = this.props;
     listener(ev);
   };
-  subscribe(props) {
-    this.subscription = props.target.addListener(props.eventName, this.onEvent);
+  subscribe() {
+    const { target, eventName } = this.props;
+    this.subscription = target.addListener(eventName, this.onEvent);
   }
   unsubscribe() {
     this.subscription.remove();

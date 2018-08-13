@@ -18,7 +18,7 @@ export default class Fetch extends PureComponent {
   static defaultProps = {
     type: 'json',
     options: {
-      credentials: 'same-origin'
+      credentials: 'same-origin',
     },
   };
 
@@ -36,12 +36,15 @@ export default class Fetch extends PureComponent {
   };
 
   componentDidMount() {
-    this.doFetch(this.props);
+    this.doFetch();
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.url !== this.props.url || newProps.type !== this.props.type) {
-      this.doFetch(newProps);
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.url !== this.props.url ||
+      prevProps.type !== this.props.type
+    ) {
+      this.doFetch();
     }
   }
 
@@ -53,28 +56,29 @@ export default class Fetch extends PureComponent {
     this.doFetch(this.props);
   };
 
-  doFetch({url, options, type, doFetch}) {
+  doFetch() {
+    const { url, options, type, doFetch } = this.props;
     let promise;
     this.setState({
       loading: true,
     });
-    promise = (doFetch ? doFetch(url, status => {
-      this.setState({
-        statusCode: resp.status,
-      });
-    }) : fetch(url, options).then(resp => {
-      this.setState({
-        statusCode: resp.status,
-      });
-      return resp[type]();
-    }))
-      .then(data => {
+    promise = (doFetch
+      ? doFetch(url)
+      : fetch(url, options).then(resp => {
+          this.setState({
+            statusCode: resp.status,
+          });
+          return resp[type]();
+        })
+    ).then(
+      data => {
         this.setState({
           loading: false,
           data,
           error: null,
         });
-      }, error => {
+      },
+      error => {
         if (promise === this.fetching) {
           this.setState({
             loading: false,
@@ -82,7 +86,8 @@ export default class Fetch extends PureComponent {
             error,
           });
         }
-      });
+      },
+    );
     this.fetching = promise;
   }
 
