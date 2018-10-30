@@ -93,6 +93,12 @@ export default class Fetch extends PureComponent {
 
   render() {
     const { children } = this.props;
+    if (typeof children === 'function') {
+      return children({
+        ...this.state,
+        reload: this.reload,
+      });
+    }
     return React.cloneElement(children, {
       ...this.state,
       reload: this.reload,

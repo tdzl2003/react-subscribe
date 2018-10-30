@@ -206,6 +206,23 @@ export default function SomePage(props) {
 }
 ```
 
+Use function as children if you don't want to seperate component:
+
+```js
+export default function SomePage(props) {
+  const { id } = props;
+  return (
+    <div>
+      <Fetch url={`/some/api/${id}`} type="json" option={FETCH_OPTION}>
+        {({ data, loading, error, reload, statusCode }) => {
+          return <div>{data && <p>{JSON.stringify(data)}</p>}</div>;
+        }}
+      </Fetch>
+    </div>
+  );
+}
+```
+
 Use 'doFetch' props to provide a custom async function.
 
 ```js
